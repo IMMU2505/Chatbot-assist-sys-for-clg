@@ -1,0 +1,39 @@
+{
+"intents": [
+{
+"tag": "greeting",
+"patterns": ["hi", "hello", "hey", "good morning", "good evening"],
+"responses": ["Hello! How can I help you today?", "Hi there — what can I do for you?"]
+},
+{
+"tag": "goodbye",
+"patterns": ["bye", "see you", "goodbye", "take care"],
+"responses": ["Goodbye!", "See you later — have a great day!"]
+},
+{
+"tag": "admissions",
+"patterns": ["admission", "admissions", "how to apply", "application process"],
+"responses": ["Admissions are open. Visit /admissions on the website or tell me which course you're interested in."]
+},
+{
+"tag": "courses",
+"patterns": ["courses", "what courses", "programs", "degree"],
+"responses": ["We offer B.Tech, M.Tech and MBA programs. Which department are you interested in?"]
+},
+{
+"tag": "faculty",
+"patterns": ["faculty", "teachers", "professors", "who is the head of department"],
+"responses": ["You can see the faculty list at /faculty — would you like details for a specific department?"]
+},
+{
+"tag": "hours",
+"patterns": ["working hours", "office hours", "when are you open"],
+"responses": ["Office hours are 9 AM - 5 PM, Monday to Friday."]
+},
+{
+"tag": "thanks",
+"patterns": ["thanks", "thank you", "thx"],
+"responses": ["You're welcome!", "Happy to help."]
+}
+]
+}
