@@ -1,6 +1,6 @@
 # AI Chatbot Assistant for College Website
 ## Live Demo
-🚀 [Chatbot Live on Vercel](https://sys-for-clg-lime.vercel.app)
+🚀 [Chatbot Live on Vercel](https://chatbot-assist-sys-for-clg-lime.vercel.app/)
 
 Note: GitHub Pages link won't work - this project needs Vercel for the API.
 Project Overview
