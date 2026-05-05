@@ -18,27 +18,26 @@ const App = () => {
   const generateBotResponse = async (history) => {
     // Helper function to update chat history
     const updateHistory = (text, isError = false) => {
-      setChatHistory((prev) => [...prev.filter((msg) => msg.text != "Typing..."), { role: "model", text, isError }]);
+      setChatHistory((prev) => [...prev.filter((msg) => msg.text!= "Typing..."), { role: "model", text, isError }]);
     };
 
-    // Format chat history for API request
-    history = history.map(({ role, text }) => ({ role, parts: [{ text }] }));
+    // Get the last user message
+    const lastUserMessage = history[history.length - 1].text;
 
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents: history }),
+      body: JSON.stringify({ message: lastUserMessage }),
     };
 
     try {
-      // Make the API call to get the bot's response
-      const response = await fetch(import.meta.env.VITE_API_URL, requestOptions);
+      // Call our new Vercel API route - Groq backend
+      const response = await fetch('/api/chat', requestOptions);
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error.message || "Something went wrong!");
-
-      // Clean and update chat history with bot's response
-      const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-      updateHistory(apiResponseText);
+      if (!response.ok) throw new Error(data.error || "Something went wrong!");
+      
+      // Update chat history with Groq's response
+      updateHistory(data.reply);
     } catch (error) {
       // Update chat history with the error message
       updateHistory(error.message, true);
@@ -51,8 +50,8 @@ const App = () => {
   }, [chatHistory]);
 
   return (
-    <div className={`container ${showChatbot ? "show-chatbot" : ""}`}>
-      <button onClick={() => setShowChatbot((prev) => !prev)} id="chatbot-toggler">
+    <div className={`container ${showChatbot? "show-chatbot" : ""}`}>
+      <button onClick={() => setShowChatbot((prev) =>!prev)} id="chatbot-toggler">
         <span className="material-symbols-outlined">chat_bubble</span>
         <span className="material-symbols-outlined">close</span>
       </button>
@@ -64,7 +63,7 @@ const App = () => {
             <ChatbotIcon />
             <h2 className="logo-text">ASCET Chatbot</h2>
           </div>
-          <button onClick={() => setShowChatbot((prev) => !prev)} className="material-symbols-outlined">
+          <button onClick={() => setShowChatbot((prev) =>!prev)} className="material-symbols-outlined">
             keyboard_arrow_down
           </button>
         </div>
@@ -74,18 +73,14 @@ const App = () => {
           <div className="message bot-message">
             <ChatbotIcon />
             <p className="message-text">
-              Welcome to Audisankara College Assistant! 👋<br/><br/>
+              Welcome to Audisankara College Assistant! 👋<br /><br />
               I'm here to help you with information about:
-              <br></br>
-              • Admissions and Programs
-              <br></br>
-              • Campus Life and Facilities
-              <br></br>
-              • Academic Requirements
-              <br></br>
-              • Financial Aid
-              <br></br>
-              • And much more!<br/><br/>
+              <br /><br />
+              • Admissions and Programs<br /><br />
+              • Campus Life and Facilities<br /><br />
+              • Academic Requirements<br /><br />
+              • Financial Aid<br /><br />
+              • And much more!<br /><br />
               How can I assist you today?
             </p>
           </div>
